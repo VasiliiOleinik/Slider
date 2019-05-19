@@ -2,12 +2,13 @@ window.addEventListener("DOMContentLoaded", () => {
     "use scrict";
 
     let settings = {
-        dots: true,
-        arrows: true,
-        title: true,
-        tileText: '1111111111111',
-        autoplay: true,
-        autoplayDuration: 3000
+        dots: true, // Точки
+        arrows: false, // Стрелки
+        title: true, // Заголовок
+        tileText: 'Title text', // Текст заголовка
+        autoplay: true, // Автопролистывание
+        autoplayDuration: 3000, //  Скорость автопролистывания
+        animation: "fade" // Тип анимации: linear, ease, ease-in, ease-in-out, ease-out
     };
 
     let slideIndex = 1, // текущий слайд
@@ -19,8 +20,9 @@ window.addEventListener("DOMContentLoaded", () => {
         dots = document.querySelectorAll(".dot"),
         title = document.querySelector('.slider-title'),
         slideElemWidth,
-        slideWidth = {};
-
+        slideWidth = {},
+        slideLength = {},
+        click = new Event("click");
 
     if (settings.dots == false) {
         dotsWrap.remove();
@@ -47,6 +49,7 @@ window.addEventListener("DOMContentLoaded", () => {
             slideIndex = slides.length;
         }
         slides.forEach((item) => item.style.display = 'none');
+        slideLength.length = slides.length;
         dots.forEach((item) => item.classList.remove('dot-active'));
         slides[slideIndex - 1].style.display = 'block';
         slideElemWidth = slidesImg[slideIndex - 1].getBoundingClientRect();
@@ -70,11 +73,37 @@ window.addEventListener("DOMContentLoaded", () => {
     });
 
     function autoplay() {
-        let click = new Event("click");
         setInterval(() => {
             next.dispatchEvent(click);
         }, settings.autoplayDuration);
     }
+
+    slides.forEach((item) => {
+        if (settings.animation === "fade") {
+            item.className = " ";
+            item.className = "fade slider-item";
+        }
+        if (settings.animation === "linear") {
+            item.className = " ";
+            item.className = "linear slider-item";
+        }
+        if (settings.animation === "ease") {
+            item.className = " ";
+            item.className = "ease slider-item";
+        }
+        if (settings.animation === "ease-in") {
+            item.className = " ";
+            item.className = "ease-in slider-item";
+        }
+        if (settings.animation === "ease-in-out") {
+            item.className = " ";
+            item.className = "ease-in-out slider-item";
+        }
+        if (settings.animation === "ease-out") {
+            item.className = " ";
+            item.className = "ease-out slider-item";
+        }
+    });
 
     dotsWrap.addEventListener("click", function (event) {
         for (let i = 0; i < dots.length + 1; i++) {
@@ -84,19 +113,4 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-
 });
-
-/*
-- Вертикальное пролистывание
-- анимация
-
-
-
-const transition = this.state.active * - 100/this.state.slides.length
-
-		return {
-			width: (this.state.slides.length * 100) + '%',
-			transform: `translateX(${transition}%)`
-		}
-*/
